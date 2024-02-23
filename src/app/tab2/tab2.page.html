@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      S.M.N.A
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">S.M.N.A</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="container">
+    <h2>Bienvenido a la página de Inicio</h2>
+    <img src="https://brandlogos.net/wp-content/uploads/2013/06/universidad-libre-vector-logo.png" alt="Logo"> <!-- Reemplaza "ruta/al/logo.png" con la ruta de tu logo -->
+    <ion-card class="usuario-card">
+    <ion-card-header>
+      <ion-card-title class="usuario-email">Credenciales de inicio de sesión:</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <h2>Correo: <span *ngIf="userData">{{ userData?.correo }}</span></h2>
+      <h2>Rol: <span *ngIf="userData">{{ userData?.rol }}</span></h2>
+    </ion-card-content>
+  </ion-card>
+  </div>
+</ion-content>

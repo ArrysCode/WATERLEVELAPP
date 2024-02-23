@@ -1,0 +1,35 @@
+
+
+
+
+<ion-content class="ion-padding">
+  <ion-card class="login-card">
+    <ion-card-header>
+      <ion-card-title>Iniciar Sesión</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <img src="https://brandlogos.net/wp-content/uploads/2013/06/universidad-libre-vector-logo.png" alt="Logo">
+      <ion-item>
+        <ion-label position="floating">Correo electrónico</ion-label>
+        <ion-input type="email" [(ngModel)]="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Contraseña</ion-label>
+        <ion-input type="password" [(ngModel)]="password"></ion-input>
+      </ion-item>
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" (click)="loginUser()">Iniciar sesión</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="presentSignupAlert()">Registrarse</ion-button>
+        </ion-col>
+      </ion-row>
+      
+    
+      
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+

@@ -1,0 +1,85 @@
+#container {
+    text-align: center;
+  
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  #container strong {
+    font-size: 20px;
+    line-height: 26px;
+  }
+  
+  #container p {
+    font-size: 16px;
+    line-height: 22px;
+  
+    color: #8c8c8c;
+  
+    margin: 0;
+  }
+  
+  #container a {
+    text-decoration: none;
+  }
+  
+  img {
+    max-width: 200px; /* Ajusta el tamaño del logotipo según sea necesario */
+    margin-bottom: 5px; /* Agrega un margen inferior para separar el logotipo del formulario */
+  }
+  /* Estilos para la card que muestra la información de cada usuario */
+.usuario-card {
+  margin-bottom: 5px; /* Reducir el espacio entre las tarjetas */
+  border-radius: 8px; /* Reducir el radio de borde de las tarjetas */
+  box-shadow: 0px 2px 4px rgba(255, 0, 0, 0.655); /* Reducir la sombra de las tarjetas */
+}
+
+.usuario-card ion-card-header {
+  padding: 4px; /* Reducir el espacio en el encabezado de la tarjeta */
+  background-color: rgb(166, 139, 17);
+}
+
+.usuario-card ion-card-content {
+  padding: 4px; /* Reducir el espacio en el contenido de la tarjeta */
+}
+.usuario-card ion-card-title {
+  font-size: 18px; /* Tamaño de fuente más pequeño para el título */
+}
+.usuario-seleccionado {
+  border: 2px solid rgb(255, 0, 0); /* Puedes personalizar los estilos según tus preferencias */
+}
+.usuario-email {
+  font-weight: bold; /* Texto del correo electrónico en negrita */
+}
+
+.usuario-rol {
+  font-style: italic; /* Texto del rol en cursiva */
+  font-size: 18px; /* Ajustar el tamaño de la fuente del rol */
+}
+
+/* Estilos para el contenedor de usuarios */
+.usuarios-container {
+  max-height: calc(100vh - 200px); /* Establecer la altura máxima del contenedor */
+  overflow-y: auto; /* Habilitar el desplazamiento vertical */
+}
+
+/* Estilos para el contenedor de botones */
+.botones-container {
+  text-align: center;
+  justify-content: center; /* Centrar los elementos horizontalmente */
+  margin-top: 20px; /* Espacio superior */
+}
+
+.botones-container ion-button {
+  margin: 15px 10px; /* Espacio entre los botones */
+}
+
+
+
+
+
+
+
