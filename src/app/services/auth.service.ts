@@ -6,7 +6,7 @@ import { AlertController } from '@ionic/angular';
 import { Usuario } from './interfaces'; // Importa la interfaz Usuario
 import firebase from 'firebase/compat/app'; // Importa el módulo de Firebase
 import 'firebase/compat/auth'; // Importa el módulo de autenticación de Firebase
-
+import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -73,7 +73,14 @@ export class AuthService {
       }
     }
     
-    
+    getCurrentUser2() {
+      return this.afAuth.authState;
+    }
+    getUserRoles(userId: string) {
+      return this.firestore.collection('usuarios').doc(userId).valueChanges().pipe(
+        map((user: any) => user ? user.rol : [])
+      );
+    }
     
     async getCurrentUser() {
       return this.afAuth.currentUser;

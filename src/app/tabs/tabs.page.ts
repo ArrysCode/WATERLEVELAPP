@@ -3,6 +3,7 @@ import { AuthService } from '../services/auth.service'; // Importa el servicio d
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { IonTabs } from '@ionic/angular';
+import { Usuario } from '../services/interfaces';
 
 @Component({
   selector: 'app-tabs',
@@ -19,6 +20,19 @@ export class TabsPage {
     private alertController: AlertController
     
     ) {}
+
+    ngOnInit() {
+      // Verificar el rol del usuario al cargar la página
+      this.authService.getCurrentUser2().subscribe(user => {
+        if (user) {
+          // Si el usuario está autenticado, verificar si tiene el rol de administrador
+          this.authService.getUserRoles(user.uid).subscribe(roles => {
+            this.isAdmin = roles.includes('admin');
+            console.log('¿Es administrador?', this.isAdmin ? 'Sí' : 'No');
+          });
+        }
+      });
+    }
 
     async ionViewWillEnter() {
       // Obtener el usuario actual
