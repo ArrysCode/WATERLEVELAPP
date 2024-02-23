@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { IonTabs } from '@ionic/angular';
 import { Usuario } from '../services/interfaces';
-
+import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
@@ -23,14 +23,21 @@ export class TabsPage {
 
     ngOnInit() {
       // Verificar el rol del usuario al cargar la página
-      this.authService.getCurrentUser2().subscribe(user => {
-        if (user) {
-          // Si el usuario está autenticado, verificar si tiene el rol de administrador
-          this.authService.getUserRoles(user.uid).subscribe(roles => {
-            this.isAdmin = roles.includes('admin');
-            console.log('¿Es administrador?', this.isAdmin ? 'Sí' : 'No');
-          });
-        }
+      this.authService.getCurrentUser2().pipe(
+        switchMap(user => {
+          if (user) {
+            // Si el usuario está autenticado, verificar si tiene el rol de administrador
+            return this.authService.getUserRoles(user.uid);
+          } else {
+            // Si el usuario no está autenticado, establecer isAdmin como false
+            this.isAdmin = false;
+            console.log('¿Es administrador?', 'No');
+            return [];
+          }
+        })
+      ).subscribe(roles => {
+        this.isAdmin = roles.includes('admin');
+        console.log('¿Es administrador?', this.isAdmin ? 'Sí' : 'No');
       });
     }
 

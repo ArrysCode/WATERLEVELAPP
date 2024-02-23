@@ -7,6 +7,10 @@ import { Usuario } from './interfaces'; // Importa la interfaz Usuario
 import firebase from 'firebase/compat/app'; // Importa el módulo de Firebase
 import 'firebase/compat/auth'; // Importa el módulo de autenticación de Firebase
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
+import { Observable } from 'rxjs';
+import { switchMap} from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +19,8 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private router: Router
     ) {
       
      }
@@ -158,9 +163,12 @@ export class AuthService {
 
   async logout() {
     try {
-      await this.afAuth.signOut();
+      await this.afAuth.signOut(); // Cerrar sesión en Firebase
+      localStorage.removeItem('user'); // Eliminar información de usuario del almacenamiento local
+      sessionStorage.clear(); // Limpiar el almacenamiento de sesión
+      this.router.navigate(['/login']); // Redirigir al usuario a la página de inicio de sesión
     } catch (error) {
-      throw error;
+      console.error('Error al cerrar sesión:', error);
     }
   }
 
@@ -178,6 +186,25 @@ export class AuthService {
     // Utilizamos una expresión regular para validar el formato del correo electrónico
     const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return pattern.test(email);
+  }
+
+
+  // Método para obtener la lista de usuarios, excluyendo al usuario autenticado actualmente
+  getUsuariosExceptoActual(): Observable<any[]> {
+    return this.afAuth.authState.pipe(
+      switchMap(user => {
+        console.log('Usuario actual:', user); // Agrega un log para verificar el usuario actual
+        if (user) {
+          // Si hay un usuario autenticado, obtenemos la lista de usuarios excluyendo al usuario actual
+          return this.firestore.collection('usuarios').valueChanges().pipe(
+            map((usuarios: any[]) => usuarios.filter(usuario => usuario.correo !== user.email))
+          );
+        } else {
+          // Si no hay usuario autenticado, devolvemos un array vacío
+          return [];
+        }
+      })
+    );
   }
 
   // Agrega otros métodos según sea necesario, como verificar el estado de la autenticación, etc.

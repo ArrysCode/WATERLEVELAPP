@@ -1,0 +1,70 @@
+.custom-card {
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 5px;
+  }
+  
+  .user-icon {
+    font-size: 30px;
+    color: #e6a131; /* Color azul, puedes cambiarlo a tu gusto */
+    margin-bottom: 5px;
+  }
+  
+ /* Estilos personalizados para las cards */
+/* Estilos personalizados para las cards */
+ion-card {
+    margin: 10px; /* Margen alrededor de cada card */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgb(255, 0, 0); /* Sombra suave */
+    transition: transform 0.3s ease, border-color 0.3s ease; /* Transición suave */
+  }
+
+  /* Estilo para la card seleccionada */
+.card-seleccionada {
+    border: 3px solid #d9a326; /* Cambia el color del borde */
+  }
+  
+  /* Estilo para la card no seleccionada */
+  .card-no-seleccionada {
+    border: 2px solid transparent; /* Borde transparente */
+  }
+  
+  /* Estilo cuando se hace hover sobre la card */
+  ion-card:hover {
+    transform: translateY(-5px); /* Desplazar hacia arriba */
+  }
+  
+  /* Estilo cuando se hace clic en la card */
+  ion-card:active {
+    transform: translateY(0); /* Restablecer la posición */
+  }
+  
+  /* Estilo cuando la card está seleccionada (enfocada) */
+  ion-card:focus {
+    border-color: #d9a326; /* Cambia el color del borde */
+  }
+  
+  /* Estilos personalizados para el header de la card */
+  ion-card-header {
+    background-color: #d9a326; /* Color de fondo del header */
+    border-bottom: 1px solid #ccc; /* Borde inferior */
+    font-weight: bold; /* Hace que el texto del header sea negrita */
+    color: #ffffff;
+    padding: 5px;
+    font-size: 20px;
+  }
+  
+  /* Estilos personalizados para el contenido de la card */
+  ion-card-content {
+    display: flex; /* Utilizamos flexbox para alinear los elementos */
+    align-items: center; /* Alineamos verticalmente los elementos */
+    padding: 5px; /* Espaciado interno */
+    background-color: rgba(255, 255, 255, 0.078);
+    backdrop-filter: blur(10px);
+  }
+  
+  /* Estilos personalizados para el icono */
+  ion-icon {
+    margin-right: 10px; /* Margen a la derecha del icono para separarlo del texto */
+  }
+  

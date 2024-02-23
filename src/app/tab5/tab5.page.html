@@ -1,13 +1,27 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>tab5</ion-title>
+    <ion-title>
+      Lista de Usuarios
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">tab5</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-searchbar (ionInput)="filtrarUsuarios($event)"></ion-searchbar>
+  <ion-card 
+  *ngFor="let usuario of usuariosFiltrados; let i = index" 
+  class="custom-card" 
+  [ngClass]="{'card-seleccionada': i === cardSeleccionada, 'card-no-seleccionada': i !== cardSeleccionada}" 
+  (click)="seleccionarCard(i)">
+    <!-- Aquí muestra los detalles del usuario en cada tarjeta -->
+    <ion-card-header>
+      
+      {{ usuario.correo }}
+    </ion-card-header>
+    <ion-card-content>
+      <ion-icon name="person-circle" class="user-icon"></ion-icon>
+      <h2>Rol: {{ usuario.rol }}</h2> <!-- Muestra el rol del usuario -->
+      <!-- Agrega más detalles del usuario según sea necesario -->
+    </ion-card-content>
+  </ion-card>
 </ion-content>
