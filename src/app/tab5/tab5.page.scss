@@ -9,6 +9,23 @@
     color: #e6a131; /* Color azul, puedes cambiarlo a tu gusto */
     margin-bottom: 5px;
   }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .edit-button {
+    margin-left: auto;
+    color: #e6a131;
+  }
+  .edit-brush-icon{
+    border: 2px solid;
+    border-color: #e6a131;
+    border-radius: 50%;
+    padding: 5px;
+    
+  }
   
  /* Estilos personalizados para las cards */
 /* Estilos personalizados para las cards */

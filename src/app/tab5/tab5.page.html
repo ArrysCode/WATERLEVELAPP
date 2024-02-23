@@ -5,23 +5,24 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
+<ion-searchbar (ionInput)="filtrarUsuarios($event)"></ion-searchbar>
+
 
 <ion-content class="ion-padding">
-  <ion-searchbar (ionInput)="filtrarUsuarios($event)"></ion-searchbar>
-  <ion-card 
-  *ngFor="let usuario of usuariosFiltrados; let i = index" 
-  class="custom-card" 
-  [ngClass]="{'card-seleccionada': i === cardSeleccionada, 'card-no-seleccionada': i !== cardSeleccionada}" 
-  (click)="seleccionarCard(i)">
+  <ion-card *ngFor="let usuario of usuariosFiltrados; let i = index" class="custom-card" [ngClass]="{'card-seleccionada': i === cardSeleccionada, 'card-no-seleccionada': i !== cardSeleccionada}" (click)="seleccionarCard(i)">
     <!-- Aquí muestra los detalles del usuario en cada tarjeta -->
     <ion-card-header>
-      
       {{ usuario.correo }}
     </ion-card-header>
     <ion-card-content>
-      <ion-icon name="person-circle" class="user-icon"></ion-icon>
-      <h2>Rol: {{ usuario.rol }}</h2> <!-- Muestra el rol del usuario -->
-      <!-- Agrega más detalles del usuario según sea necesario -->
+      <div class="user-info">
+        <ion-icon name="person-circle" class="user-icon"></ion-icon>
+        <h2>Rol: {{ usuario.rol }}</h2> <!-- Muestra el rol del usuario -->
+      </div>
+      <ion-button (click)="editarUsuario(usuario)" fill="clear" class="edit-button">
+        <ion-icon class="edit-brush-icon" name="pencil"></ion-icon>
+      </ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>
+

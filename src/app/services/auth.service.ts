@@ -67,7 +67,9 @@ export class AuthService {
       try {
         const userDoc = await this.firestore.collection('usuarios').doc(userId).get().toPromise();
         if (userDoc && userDoc.exists) {
-          return userDoc.data() as Usuario;
+          const userData = userDoc.data() as Usuario;
+          userData.uid = userId; // Asegúrate de incluir el UID del documento en el objeto del usuario
+          return userData;
         } else {
           console.error('No se encontraron datos de usuario en Firestore.');
           return null;
@@ -136,7 +138,8 @@ export class AuthService {
         // Aquí se crea el usuario en Firestore
         await this.firestore.collection('usuarios').doc(uid).set({
           correo: email,
-          rol: ['user'] // Asignamos el rol 'user' por defecto
+          rol: ['user'], // Asignamos el rol 'user' por defecto
+          uid: uid
         });
         // Si la escritura en Firestore fue exitosa, no hay necesidad de devolver un valor
       } catch (error) {
