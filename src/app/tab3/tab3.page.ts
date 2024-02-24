@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
 
 @Component({
   selector: 'app-tab3',
@@ -6,7 +7,15 @@ import { Component } from '@angular/core';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
+  constructor(public db: AngularFireDatabase) {
+    this.getMeasures();
+  }
 
-  constructor() {}
+  getMeasures() {
+    const path = "test/"
 
+    this.db.list(path).valueChanges().subscribe(res => {
+      console.log("Mediciones: ", res);
+    })
+  }
 }
