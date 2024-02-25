@@ -106,7 +106,14 @@ export class Tab5Page implements OnInit {
         correo: nuevoCorreo,
         rol: nuevoRol
       });
-      console.log('Usuario actualizado correctamente.');
+      
+      // Mostrar una alerta de éxito cuando se actualiza el usuario
+      const alert = await this.alertController.create({
+        header: 'Éxito',
+        message: 'Usuario actualizado correctamente.',
+        buttons: ['OK']
+      });
+      await alert.present();
     } catch (error) {
       console.error('Error al actualizar usuario:', error);
     }

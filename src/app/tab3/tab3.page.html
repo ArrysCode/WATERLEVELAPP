@@ -1,13 +1,13 @@
 <ion-content>
-  <ion-card>
+  <ion-card class="transparent-background">
     <ion-card-header>
-      Nivel de Agua
+      Nivel de Agua T1
     </ion-card-header>
     <ion-card-content>
       <div class="tank">
         <div class="water" [style.height.%]="waterLevel"></div>
+        <div class="water-level">{{ waterLevel }}%</div>
       </div>
-      <p>Porcentaje de Agua: {{ waterLevel }}%</p>
     </ion-card-content>
   </ion-card>
 </ion-content>

@@ -1,16 +1,45 @@
+.transparent-background {
+  background-color: transparent !important;
+}
+
 .tank {
-    width: 100px;
-    height: 150px; /* Ajusta según el tamaño deseado del tanque */
-    background-color: #ccc;
-    position: relative;
-  }
-  
-  .water {
-    width: 100%;
-    background-color: lightblue;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    transition: height 0.5s ease; /* Efecto de transición para el agua */
-  }
-  
+  width: 100px; /* Ajusta según el tamaño deseado del tanque */
+  height: 190px; /* Ajusta según el tamaño deseado del tanque */
+  background-color: #ccc;
+  position: relative;
+  margin: 0 auto; /* Centrar el tanque horizontalmente */
+  border-radius: 50px/10px; /* Ajusta el radio de los bordes para dar una forma más curva */
+  overflow: hidden; /* Para ocultar cualquier contenido que se desborde */
+}
+
+.tank:before {
+  content: "";
+  position: absolute;
+  top: -20px; /* Ajusta según la altura deseada del cuello de la botella */
+  left: 0;
+  width: 100%;
+  height: 40px; /* Ajusta según la altura deseada del cuello de la botella */
+  background-color: #ccc;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+}
+
+
+
+.water {
+  width: 100%;
+  background-color: rgb(62, 106, 210);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: height 0.5s ease; /* Efecto de transición para el agua */
+}
+
+.water-level {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centrar el texto del porcentaje */
+  font-size: 20px; /* Tamaño del texto del porcentaje */
+  color: #ffffff;
+}

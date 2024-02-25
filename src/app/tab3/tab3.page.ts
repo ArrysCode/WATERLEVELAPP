@@ -20,7 +20,7 @@ export class Tab3Page {
       if (res !== null) {
         console.log("Medición: ", res);
         // Convertir la distancia a porcentaje
-        this.waterLevel = this.calculateWaterLevel(res);
+        this.waterLevel = Math.floor(this.calculateWaterLevel(res));
       } else {
         console.log("El valor es nulo.");
       }
