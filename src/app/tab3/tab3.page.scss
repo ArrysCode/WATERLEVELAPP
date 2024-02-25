@@ -1,0 +1,16 @@
+.tank {
+    width: 100px;
+    height: 150px; /* Ajusta según el tamaño deseado del tanque */
+    background-color: #ccc;
+    position: relative;
+  }
+  
+  .water {
+    width: 100%;
+    background-color: lightblue;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: height 0.5s ease; /* Efecto de transición para el agua */
+  }
+  
