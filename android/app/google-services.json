@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "872315596040",
+    "firebase_url": "https://smna2024-7679a-default-rtdb.firebaseio.com",
+    "project_id": "smna2024-7679a",
+    "storage_bucket": "smna2024-7679a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872315596040:android:4120c04cafc170880ad0bd",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgirqmLAqZ2vfbDLnxpXliiEfB_xjdSLM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

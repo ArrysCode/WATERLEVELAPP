@@ -1,10 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Tab 4
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
-  <ion-card *ngIf="waterLevelAlert">
+  <ion-card *ngIf="waterLevel >= 90">
     <ion-card-header>
       Alerta de Nivel de Agua
     </ion-card-header>
     <ion-card-content>
-      <p>El nivel de agua en el tanque ha alcanzado el 90%. Se recomienda acudir a la planta de tratamiento de aguas pluviales.</p>
+      El nivel de agua en el tanque ha alcanzado el {{waterLevel}}%. Se recomienda acudir a la planta de tratamiento de aguas pluviales.
     </ion-card-content>
   </ion-card>
 </ion-content>

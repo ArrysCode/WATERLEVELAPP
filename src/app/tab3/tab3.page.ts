@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { NavController } from '@ionic/angular'; // Importa NavController
-import { AlertService } from '../services/alert.service';
+import { WaterLevelService } from '../services/water-level.service';
+
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -9,26 +9,23 @@ import { AlertService } from '../services/alert.service';
 })
 export class Tab3Page {
   waterLevel: number = 0;
-  
 
-  constructor(
-    public db: AngularFireDatabase, 
-    public navCtrl: NavController,
-    private alertService: AlertService,
-    ) {
+  constructor(private db: AngularFireDatabase, private waterLevelService: WaterLevelService) {
     this.getMeasures();
+  }
+
+  ngOnInit() {
+    console.log('Tab3Page initialized');
   }
 
   getMeasures() {
     const path = "test/float";
-  
+
     this.db.object<number | null>(path).valueChanges().subscribe((res: number | null) => {
       if (res !== null) {
         console.log("Medición: ", res);
         this.waterLevel = Math.floor(this.calculateWaterLevel(res));
-        if (this.waterLevel >= 90) {
-          this.alertService.setWaterLevelAlert(true);
-        }
+        this.waterLevelService.updateWaterLevel(this.waterLevel); // Actualizar el nivel de agua en el servicio
       } else {
         console.log("El valor es nulo.");
       }
