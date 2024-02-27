@@ -9,7 +9,7 @@ import { WaterLevelService } from '../services/water-level.service';
 })
 export class Tab3Page {
   waterLevel: number = 0;
-
+  
   constructor(private db: AngularFireDatabase, private waterLevelService: WaterLevelService) {
     this.getMeasures();
   }

@@ -28,11 +28,24 @@
 
 .water {
   width: 100%;
-  background-color: rgb(62, 106, 210);
+  
+  background-image: url('../img/wave.png') ;
+  background-size: 100% auto; /* Ajusta el ancho al 100% y deja que el alto se ajuste automáticamente */
+  background-repeat: repeat-x;
   position: absolute;
   bottom: 0;
   left: 0;
   transition: height 0.5s ease; /* Efecto de transición para el agua */
+  animation: moveWaves 7s linear infinite;
+}
+
+@keyframes moveWaves {
+  0% {
+    background-position-x: 1000px; /* Comienza desde la posición inicial */
+  }
+  100% {
+    background-position-x: 0px; /* Termina en la posición final, desplazándose completamente a la derecha */
+  }
 }
 
 .water-level {
