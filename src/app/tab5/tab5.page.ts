@@ -53,22 +53,32 @@ export class Tab5Page implements OnInit {
 
 
   async editarUsuario(usuario: any) {
-    console.log('Usuario a editar:', usuario); // Agregar log para verificar el usuario seleccionado
-
+    console.log('Usuario a editar:', usuario);
+  
     const alert = await this.alertController.create({
       header: 'Editar Usuario',
       subHeader: usuario.correo,
       message: `Rol actual: ${usuario.rol}`,
       inputs: [
         {
-          name: 'nuevoCorreo',
-          type: 'text',
-          placeholder: 'Nuevo correo electrónico'
+          name: 'nuevoRol',
+          type: 'radio',
+          label: 'Admin',
+          value: 'admin',
+          checked: usuario.rol === 'admin', // Marcar como seleccionado si el rol actual es 'admin'
+          handler: () => {
+            console.log('Opción seleccionada: Admin');
+          }
         },
         {
           name: 'nuevoRol',
-          type: 'text',
-          placeholder: 'Nuevo rol'
+          type: 'radio',
+          label: 'Usuario',
+          value: 'user',
+          checked: usuario.rol === 'user', // Marcar como seleccionado si el rol actual es 'user'
+          handler: () => {
+            console.log('Opción seleccionada: Usuario');
+          }
         }
       ],
       buttons: [
@@ -80,14 +90,20 @@ export class Tab5Page implements OnInit {
           text: 'Guardar',
           handler: async (data) => {
             try {
-              // Verificar si se proporcionó un nuevo correo electrónico
-              const nuevoCorreo = data.nuevoCorreo.trim() !== '' ? data.nuevoCorreo.trim() : usuario.correo;
-              
-              // Verificar si se proporcionó un nuevo rol
-              const nuevoRol = data.nuevoRol.trim() !== '' ? data.nuevoRol.trim() : usuario.rol;
-
+              console.log('Data:', data); // Imprimir el objeto data completo
+  
+              const nuevoRol = data; // Obtener directamente el valor del nuevo rol seleccionado
+  
               // Actualizar la información del usuario en Firestore
-              await this.actualizarUsuario(usuario, nuevoCorreo, nuevoRol);
+              await this.actualizarUsuario(usuario.uid, nuevoRol); // Pasar el nuevo rol como una cadena
+  
+              // Mostrar una alerta de éxito cuando se actualiza el usuario
+              const alert = await this.alertController.create({
+                header: 'Éxito',
+                message: 'Usuario actualizado correctamente.',
+                buttons: ['OK']
+              });
+              await alert.present();
             } catch (error) {
               console.error('Error al actualizar usuario:', error);
             }
@@ -95,29 +111,33 @@ export class Tab5Page implements OnInit {
         }
       ]
     });
-
+  
     await alert.present();
   }
-
-  async actualizarUsuario(usuario: any, nuevoCorreo: string, nuevoRol: string) {
+  
+  
+  
+  
+  
+  async actualizarUsuario(uid: string, nuevoRol: string) {
     try {
-      const usuarioRef = this.firestore.collection('usuarios').doc(usuario.uid);
-      await usuarioRef.update({
-        correo: nuevoCorreo,
-        rol: nuevoRol
-      });
-      
-      // Mostrar una alerta de éxito cuando se actualiza el usuario
-      const alert = await this.alertController.create({
-        header: 'Éxito',
-        message: 'Usuario actualizado correctamente.',
-        buttons: ['OK']
-      });
-      await alert.present();
+      if (nuevoRol !== undefined) { // Verificar si nuevoRol tiene un valor definido
+        const usuarioRef = this.firestore.collection('usuarios').doc(uid);
+        await usuarioRef.update({
+          rol: nuevoRol
+        });
+      } else {
+        console.error('El nuevo rol es indefinido.');
+      }
     } catch (error) {
       console.error('Error al actualizar usuario:', error);
+      throw error; // Propagar el error para manejarlo en la función llamadora si es necesario
     }
   }
+  
+  
+  
+  
 
 
 
