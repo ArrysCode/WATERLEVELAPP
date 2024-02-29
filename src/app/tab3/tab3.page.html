@@ -7,6 +7,8 @@
 </ion-header>
 
 <ion-content>
+
+
   <ion-card class="transparent-background">
     <ion-card-header>
       Nivel de Agua T1
@@ -18,4 +20,32 @@
       </div>
     </ion-card-content>
   </ion-card>
+
+
+  <ion-card class="transparent-background">
+    <ion-card-header>
+      Nivel de Agua T2
+    </ion-card-header>
+    <ion-card-content>
+      <div class="tank">
+        <div class="water" [style.height.%]="waterLevel2"></div>
+        <div class="water-level">{{ waterLevel2 }}%</div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card class="transparent-background">
+    <ion-card-header>
+      Nivel de Agua T3
+    </ion-card-header>
+    <ion-card-content>
+      <div class="tank">
+        <div class="water" [style.height.%]="waterLevel3"></div>
+        <div class="water-level">{{ waterLevel3 }}%</div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+
+
 </ion-content>
