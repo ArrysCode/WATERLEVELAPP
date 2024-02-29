@@ -37,6 +37,8 @@ export class AuthService {
       try {
         const credential = await this.afAuth.signInWithEmailAndPassword(email, password);
         if (credential && credential.user) {
+          localStorage.setItem('user', JSON.stringify(credential.user));
+
           const userId = credential.user.uid;
           const userData = await this.getUserData(userId); // Obtener los datos del usuario desde Firestore
     
@@ -90,6 +92,8 @@ export class AuthService {
     }
     
     async getCurrentUser() {
+      const user = localStorage.getItem('user');
+      return user ? JSON.parse(user) : null;
       return this.afAuth.currentUser;
     }
     
