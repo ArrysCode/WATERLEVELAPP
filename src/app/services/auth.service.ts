@@ -22,7 +22,8 @@ export class AuthService {
     private alertController: AlertController,
     private router: Router
     ) {
-      
+      // Configura la persistencia de sesión para mantener la sesión iniciada incluso después de salir de la aplicación
+      this.afAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
      }
 
      hasRequiredRole(userData: Usuario): boolean {
