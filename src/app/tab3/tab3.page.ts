@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { WaterLevelService } from '../services/water-level.service';
+import { LocalNotifications } from '@capacitor/local-notifications';
 
 @Component({
   selector: 'app-tab3',
@@ -23,13 +24,13 @@ export class Tab3Page {
   }
 
   getMeasures() {
-    const path = "test/float";
+    const path = "test1/float";
 
     this.db.object<number | null>(path).valueChanges().subscribe((res: number | null) => {
       if (res !== null) {
         console.log("Medición: ", res);
         this.waterLevel = Math.floor(this.calculateWaterLevel(res));
-        this.waterLevelService.updateWaterLevel(this.waterLevel); // Actualizar el nivel de agua en el servicio
+        
       } else {
         console.log("El valor es nulo.");
       }
@@ -67,5 +68,27 @@ export class Tab3Page {
     if (percentage < 0) percentage = 0;
     if (percentage > 100) percentage = 100;
     return percentage;
+  }
+
+  // Método para enviar la notificación cuando se pulsa el botón
+  async sendNotification() {
+    try {
+      await LocalNotifications.schedule({
+        notifications: [
+          {
+            title: '¡Notificación de prueba!',
+            body: 'Este es un mensaje de prueba.',
+            id: Date.now(),
+            schedule: { at: new Date(Date.now() + 10) }, // Programa la notificación para 1 segundo después
+            sound: 'beep.wav',
+            smallIcon: 'ic_stat_icon_config_sample',
+            iconColor: '#488AFF',
+          }
+        ]
+      });
+      console.log('Notificación enviada con éxito.');
+    } catch (error) {
+      console.error('Error al enviar la notificación:', error);
+    }
   }
 }

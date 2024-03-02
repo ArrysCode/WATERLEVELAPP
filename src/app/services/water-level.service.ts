@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { LocalNotifications } from '@capacitor/local-notifications';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,14 @@ export class WaterLevelService {
     this.getMeasures3();
   }
 
-   getMeasures() {
-    const path = "test/float";
+  getMeasures() {
+    const path = "test1/float";
     this.db.object<number | null>(path).valueChanges().subscribe((res: number | null) => {
       if (res !== null) {
         console.log("Medición: ", res);
         this.waterLevel = Math.floor(this.calculateWaterLevel(res));
-        console.log("Nivel de agua actualizado:", this.waterLevel); // Agregar log para mostrar el nivel de agua actualizado
+        console.log("Nivel de agua actualizado:", this.waterLevel);
+        this.checkAndSendNotification(this.waterLevel);
       } else {
         console.log("El valor es nulo.");
       }
@@ -33,24 +35,26 @@ export class WaterLevelService {
     const path = "test2/float";
     this.db.object<number | null>(path).valueChanges().subscribe((res: number | null) => {
       if (res !== null) {
-        console.log("Medición tanque 2: ", res);
+        console.log("Medición: ", res);
         this.waterLevel2 = Math.floor(this.calculateWaterLevel(res));
-        console.log("Nivel de agua actualizado para tanque 2:", this.waterLevel2);
+        console.log("Nivel de agua actualizado:", this.waterLevel2);
+        this.checkAndSendNotification(this.waterLevel2);
       } else {
-        console.log("El valor es nulo para el tanque 2.");
+        console.log("El valor es nulo.");
       }
     });
   }
-  
+
   getMeasures3() {
     const path = "test3/float";
     this.db.object<number | null>(path).valueChanges().subscribe((res: number | null) => {
       if (res !== null) {
-        console.log("Medición tanque 3: ", res);
+        console.log("Medición: ", res);
         this.waterLevel3 = Math.floor(this.calculateWaterLevel(res));
-        console.log("Nivel de agua actualizado para tanque 3:", this.waterLevel3);
+        console.log("Nivel de agua actualizado:", this.waterLevel3);
+        this.checkAndSendNotification(this.waterLevel3);
       } else {
-        console.log("El valor es nulo para el tanque 3.");
+        console.log("El valor es nulo.");
       }
     });
   }
@@ -64,10 +68,27 @@ export class WaterLevelService {
     return percentage;
   }
 
-  updateWaterLevel(level: number) {
-    this.waterLevel = level;
-    console.log("Nivel de agua actualizado (desde servicio):", this.waterLevel); // Agregar log para mostrar el nivel de agua actualizado desde el servicio
+  private async checkAndSendNotification(waterLevel: number) {
+    if (waterLevel >= 80 && waterLevel < 90) {
+      await this.sendNotification('Nivel de agua alto', 'El nivel de agua está por encima del 80%.');
+    } else if (waterLevel >= 90) {
+      await this.sendNotification('¡Nivel de agua crítico!', 'El nivel de agua ha superado el 90%.');
+    }
+  }
+
+  private async sendNotification(title: string, body: string) {
+    await LocalNotifications.schedule({
+      notifications: [
+        {
+          title: title,
+          body: body,
+          id: Date.now(),
+          schedule: { at: new Date(Date.now() + 10) }, // Programa la notificación para 10 segundos después
+          sound: 'beep.wav',
+          smallIcon: 'ic_stat_icon_config_sample',
+          iconColor: '#488AFF',
+        }
+      ]
+    });
   }
 }
-
-

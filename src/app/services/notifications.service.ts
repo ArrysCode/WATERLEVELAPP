@@ -13,7 +13,6 @@ export class NotificationsService {
   get redirect() {
     return this._redirect.asObservable();
   }
-
   constructor(
     private storage: StorageService
   ) { }
@@ -114,5 +113,3 @@ export class NotificationsService {
 
   }
 }
-
-

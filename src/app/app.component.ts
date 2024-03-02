@@ -3,39 +3,18 @@ import { WaterLevelService } from './services/water-level.service';
 import { AlertService } from './services/alert.service';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
-
-import { IonicModule, Platform } from '@ionic/angular';
-import { NotificationsService } from './services/notifications.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  standalone: true,
-  imports: [IonicModule],
-
 })
 export class AppComponent {
   constructor(
     private waterLevelService: WaterLevelService, 
     private alertService: AlertService,
     private router: Router,
-    private authService: AuthService,
-    private platform: Platform,
-    private fcm: NotificationsService
-
-    ) {
-      this.platform.ready().then(() => {
-        this.fcm.initPush();
-      }).catch(e => {
-        console.log('error fcm: ', e);
-      });
-    
-
-
-
-    }
-
-
+    private authService: AuthService
+    ) {}
   ngOnInit() {
     // Inicialización del servicio WaterLevel
     this.waterLevelService.getMeasures();
