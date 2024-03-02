@@ -69,3 +69,5 @@ export class WaterLevelService {
     console.log("Nivel de agua actualizado (desde servicio):", this.waterLevel); // Agregar log para mostrar el nivel de agua actualizado desde el servicio
   }
 }
+
+
