@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { WaterLevelService } from './services/water-level.service';
+import { AlertService } from './services/alert.service';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 @Component({
@@ -10,7 +12,9 @@ export class AppComponent {
   constructor(
     private router: Router,
     private authService: AuthService
-    ) {}
+    ) {
+
+    }
   ngOnInit() {
     // Verifica si hay un usuario autenticado al iniciar la aplicación
     this.authService.getCurrentUser().then(user => {
