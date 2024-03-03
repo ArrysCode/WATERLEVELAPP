@@ -71,24 +71,19 @@ export class Tab3Page {
   }
 
   // Método para enviar la notificación cuando se pulsa el botón
-  async sendNotification() {
-    try {
-      await LocalNotifications.schedule({
-        notifications: [
-          {
-            title: '¡Notificación de prueba!',
-            body: 'Este es un mensaje de prueba.',
-            id: Date.now(),
-            schedule: { at: new Date(Date.now() + 10) }, // Programa la notificación para 1 segundo después
-            sound: 'beep.wav',
-            smallIcon: 'ic_stat_icon_config_sample',
-            iconColor: '#488AFF',
-          }
-        ]
-      });
+  sendNotification() {
+    const options = {
+      notifications: [{
+        id: 1,
+        title: 'Local Notification',
+        body: 'My first notification message'
+      }]
+    };
+
+    LocalNotifications.schedule(options).then(() => {
       console.log('Notificación enviada con éxito.');
-    } catch (error) {
+    }).catch((error) => {
       console.error('Error al enviar la notificación:', error);
-    }
+    });
   }
 }

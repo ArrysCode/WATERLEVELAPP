@@ -17,7 +17,9 @@ export class AppComponent {
     ) {}
   ngOnInit() {
     // Inicialización del servicio WaterLevel
-    this.waterLevelService.getMeasures();
+    this.waterLevelService.getMeasures1();
+    this.waterLevelService.getMeasures2();
+    this.waterLevelService.getMeasures3();
 
     // Verifica si hay un usuario autenticado al iniciar la aplicación
     this.authService.getCurrentUser().then(user => {

@@ -12,19 +12,19 @@ export class WaterLevelService {
 
   constructor(private db: AngularFireDatabase) {
     console.log('WaterLevelService initialized');
-    this.getMeasures();
+    this.getMeasures1();
     this.getMeasures2();
     this.getMeasures3();
   }
 
-  getMeasures() {
+  getMeasures1() {
     const path = "test1/float";
     this.db.object<number | null>(path).valueChanges().subscribe((res: number | null) => {
       if (res !== null) {
         console.log("Medición: ", res);
         this.waterLevel = Math.floor(this.calculateWaterLevel(res));
         console.log("Nivel de agua actualizado:", this.waterLevel);
-        this.checkAndSendNotification(this.waterLevel);
+        this.checkAndSendNotification1(this.waterLevel);
       } else {
         console.log("El valor es nulo.");
       }
@@ -38,7 +38,7 @@ export class WaterLevelService {
         console.log("Medición: ", res);
         this.waterLevel2 = Math.floor(this.calculateWaterLevel(res));
         console.log("Nivel de agua actualizado:", this.waterLevel2);
-        this.checkAndSendNotification(this.waterLevel2);
+        this.checkAndSendNotification2(this.waterLevel2);
       } else {
         console.log("El valor es nulo.");
       }
@@ -52,7 +52,7 @@ export class WaterLevelService {
         console.log("Medición: ", res);
         this.waterLevel3 = Math.floor(this.calculateWaterLevel(res));
         console.log("Nivel de agua actualizado:", this.waterLevel3);
-        this.checkAndSendNotification(this.waterLevel3);
+        this.checkAndSendNotification3(this.waterLevel3);
       } else {
         console.log("El valor es nulo.");
       }
@@ -68,15 +68,82 @@ export class WaterLevelService {
     return percentage;
   }
 
-  private async checkAndSendNotification(waterLevel: number) {
+  private async checkAndSendNotification1(waterLevel: number) {
     if (waterLevel >= 80 && waterLevel < 90) {
-      await this.sendNotification('Nivel de agua alto', 'El nivel de agua está por encima del 80%.');
+      await this.sendNotification1('Nivel de agua en el Tanque 1', 'El nivel de agua está por encima del 80%.');
     } else if (waterLevel >= 90) {
-      await this.sendNotification('¡Nivel de agua crítico!', 'El nivel de agua ha superado el 90%.');
+      await this.sendNotification1('¡Nivel de agua crítico en el Tanque 1!', 'El nivel de agua ha superado el 90%.');
     }
   }
 
-  private async sendNotification(title: string, body: string) {
+  private async checkAndSendNotification2(waterLevel2: number) {
+    if (waterLevel2 >= 80 && waterLevel2 < 90) {
+      await this.sendNotification2('Nivel de agua alto en el Tanque 2', 'El nivel de agua está por encima del 80%.');
+    } else if (waterLevel2 >= 90) {
+      await this.sendNotification2('¡Nivel de agua crítico en el Tanque 2!', 'El nivel de agua ha superado el 90%.');
+    }
+  }
+
+  private async checkAndSendNotification3(waterLevel3: number) {
+    if (waterLevel3 >= 80 && waterLevel3 < 90) {
+      await this.sendNotification3('Nivel de agua alto en el Tanque 3', 'El nivel de agua está por encima del 80%.');
+    } else if (waterLevel3 >= 90) {
+      await this.sendNotification3('¡Nivel de agua crítico en el Tanque 3!', 'El nivel de agua ha superado el 90%.');
+    }
+  }
+
+  private async sendNotification1(title: string, body: string) {
+    const options = {
+      notifications: [{
+        id: 1,
+        title: title,
+          body: body,
+          sound: 'beep.wav'
+      }]
+    };
+
+    await LocalNotifications.schedule(options).then(() => {
+      console.log('Notificación enviada con éxito.');
+    }).catch((error) => {
+      console.error('Error al enviar la notificación:', error);
+    });
+  }
+
+  private async sendNotification2(title: string, body: string) {
+    const options = {
+      notifications: [{
+        id: 2,
+        title: title,
+          body: body,
+          sound: 'beep.wav'
+      }]
+    };
+
+    await LocalNotifications.schedule(options).then(() => {
+      console.log('Notificación enviada con éxito.');
+    }).catch((error) => {
+      console.error('Error al enviar la notificación:', error);
+    });
+  }
+
+  private async sendNotification3(title: string, body: string) {
+    const options = {
+      notifications: [{
+        id: 3,
+        title: title,
+          body: body,
+          sound: 'beep.wav'
+      }]
+    };
+
+    await LocalNotifications.schedule(options).then(() => {
+      console.log('Notificación enviada con éxito.');
+    }).catch((error) => {
+      console.error('Error al enviar la notificación:', error);
+    });
+  }
+
+  /*private async sendNotification(title: string, body: string) {
     await LocalNotifications.schedule({
       notifications: [
         {
@@ -90,5 +157,5 @@ export class WaterLevelService {
         }
       ]
     });
-  }
+  }*/
 }
