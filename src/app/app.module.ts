@@ -9,6 +9,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { WaterLevelService } from './services/water-level.service';
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -20,7 +21,8 @@ import { WaterLevelService } from './services/water-level.service';
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    WaterLevelService // Movemos la declaración del servicio aquí
+    WaterLevelService, // Movemos la declaración del servicio aquí
+    
   ],
   bootstrap: [AppComponent],
 })

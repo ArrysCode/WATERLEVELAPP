@@ -6,7 +6,7 @@ import { LocalNotifications } from '@capacitor/local-notifications';
   providedIn: 'root'
 })
 export class WaterLevelService {
-  waterLevel: number = 0;
+  waterLevel1: number = 0;
   waterLevel2: number = 0;
   waterLevel3: number = 0;
 
@@ -18,13 +18,15 @@ export class WaterLevelService {
   }
 
   getMeasures1() {
+    
     const path = "test1/float";
     this.db.object<number | null>(path).valueChanges().subscribe((res: number | null) => {
       if (res !== null) {
         console.log("Medición: ", res);
-        this.waterLevel = Math.floor(this.calculateWaterLevel(res));
-        console.log("Nivel de agua actualizado:", this.waterLevel);
-        this.checkAndSendNotification1(this.waterLevel);
+        this.waterLevel1 = Math.floor(this.calculateWaterLevel(res));
+        console.log("Nivel de agua actualizado:", this.waterLevel1);
+        
+        this.checkAndSendNotification(this.waterLevel1, 1);
       } else {
         console.log("El valor es nulo.");
       }
@@ -38,7 +40,8 @@ export class WaterLevelService {
         console.log("Medición: ", res);
         this.waterLevel2 = Math.floor(this.calculateWaterLevel(res));
         console.log("Nivel de agua actualizado:", this.waterLevel2);
-        this.checkAndSendNotification2(this.waterLevel2);
+        
+        this.checkAndSendNotification(this.waterLevel2, 2);
       } else {
         console.log("El valor es nulo.");
       }
@@ -52,14 +55,15 @@ export class WaterLevelService {
         console.log("Medición: ", res);
         this.waterLevel3 = Math.floor(this.calculateWaterLevel(res));
         console.log("Nivel de agua actualizado:", this.waterLevel3);
-        this.checkAndSendNotification3(this.waterLevel3);
+        
+        this.checkAndSendNotification(this.waterLevel3, 3);
       } else {
         console.log("El valor es nulo.");
       }
     });
   }
 
-  private calculateWaterLevel(distance: number): number {
+  calculateWaterLevel(distance: number): number {
     // Suponiendo que 1.5m representa el tanque lleno
     const tankHeight = 150; // 1.5m en cm
     let percentage = ((tankHeight - distance) / tankHeight) * 100;
@@ -68,94 +72,29 @@ export class WaterLevelService {
     return percentage;
   }
 
-  private async checkAndSendNotification1(waterLevel: number) {
+  private async checkAndSendNotification(waterLevel: number, TankId: number) {
     if (waterLevel >= 80 && waterLevel < 90) {
-      await this.sendNotification1('Nivel de agua en el Tanque 1', 'El nivel de agua está por encima del 80%.');
+      await this.sendNotification(TankId, 'Nivel de agua alto en el tanque '+ TankId, 'El nivel de agua está por encima del 80%.');
     } else if (waterLevel >= 90) {
-      await this.sendNotification1('¡Nivel de agua crítico en el Tanque 1!', 'El nivel de agua ha superado el 90%.');
+      await this.sendNotification(TankId, '¡Nivel de agua crítico! en el tanque '+ TankId, 'El nivel de agua ha superado el 90%.');
     }
   }
 
-  private async checkAndSendNotification2(waterLevel2: number) {
-    if (waterLevel2 >= 80 && waterLevel2 < 90) {
-      await this.sendNotification2('Nivel de agua alto en el Tanque 2', 'El nivel de agua está por encima del 80%.');
-    } else if (waterLevel2 >= 90) {
-      await this.sendNotification2('¡Nivel de agua crítico en el Tanque 2!', 'El nivel de agua ha superado el 90%.');
-    }
-  }
-
-  private async checkAndSendNotification3(waterLevel3: number) {
-    if (waterLevel3 >= 80 && waterLevel3 < 90) {
-      await this.sendNotification3('Nivel de agua alto en el Tanque 3', 'El nivel de agua está por encima del 80%.');
-    } else if (waterLevel3 >= 90) {
-      await this.sendNotification3('¡Nivel de agua crítico en el Tanque 3!', 'El nivel de agua ha superado el 90%.');
-    }
-  }
-
-  private async sendNotification1(title: string, body: string) {
+  sendNotification(id: number, title: string, body: string) {
     const options = {
       notifications: [{
-        id: 1,
+        id: id,
         title: title,
-          body: body,
-          sound: 'beep.wav'
+        body: body,
+        allowWhileIdle: true // Esta opción permite que la notificación se entregue incluso en el modo Doze
       }]
     };
-
-    await LocalNotifications.schedule(options).then(() => {
+  
+    LocalNotifications.schedule(options).then(() => {
       console.log('Notificación enviada con éxito.');
     }).catch((error) => {
       console.error('Error al enviar la notificación:', error);
     });
   }
-
-  private async sendNotification2(title: string, body: string) {
-    const options = {
-      notifications: [{
-        id: 2,
-        title: title,
-          body: body,
-          sound: 'beep.wav'
-      }]
-    };
-
-    await LocalNotifications.schedule(options).then(() => {
-      console.log('Notificación enviada con éxito.');
-    }).catch((error) => {
-      console.error('Error al enviar la notificación:', error);
-    });
-  }
-
-  private async sendNotification3(title: string, body: string) {
-    const options = {
-      notifications: [{
-        id: 3,
-        title: title,
-          body: body,
-          sound: 'beep.wav'
-      }]
-    };
-
-    await LocalNotifications.schedule(options).then(() => {
-      console.log('Notificación enviada con éxito.');
-    }).catch((error) => {
-      console.error('Error al enviar la notificación:', error);
-    });
-  }
-
-  /*private async sendNotification(title: string, body: string) {
-    await LocalNotifications.schedule({
-      notifications: [
-        {
-          title: title,
-          body: body,
-          id: Date.now(),
-          schedule: { at: new Date(Date.now() + 10) }, // Programa la notificación para 10 segundos después
-          sound: 'beep.wav',
-          smallIcon: 'ic_stat_icon_config_sample',
-          iconColor: '#488AFF',
-        }
-      ]
-    });
-  }*/
+  
 }

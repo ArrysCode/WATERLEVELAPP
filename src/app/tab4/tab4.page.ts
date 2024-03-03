@@ -21,7 +21,7 @@ export class Tab4Page {
     }
 
   getMeasures() {
-    const path = "test/float";
+    const path = "test1/float";
 
     this.db.object<number | null>(path).valueChanges().subscribe((res: number | null) => {
       if (res !== null) {

@@ -8,17 +8,14 @@
 
 <ion-content>
 
-  <!-- Agrega un botón -->
-  <ion-button expand="block" (click)="sendNotification()">Enviar Notificación</ion-button>
-
   <ion-card class="transparent-background">
     <ion-card-header>
       Nivel de Agua T1
     </ion-card-header>
     <ion-card-content>
       <div class="tank">
-        <div class="water" [style.height.%]="waterLevel"></div>
-        <div class="water-level">{{ waterLevel }}%</div>
+        <div class="water" [style.height.%]="waterLevel1"></div>
+        <div class="water-level">{{ waterLevel1 }}%</div>
       </div>
     </ion-card-content>
   </ion-card>
