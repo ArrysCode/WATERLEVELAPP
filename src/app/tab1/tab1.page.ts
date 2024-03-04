@@ -9,13 +9,14 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-  email: string = '';
-  password: string = '';
+  email: string = ''; // Variable para almacenar el correo electrónico del usuario
+  password: string = ''; // Variable para almacenar la contraseña del usuario
 
   constructor(private authService: AuthService,
               private router: Router,
               private alertController: AlertController) {}
 
+  // Método para iniciar sesión de usuario
   async loginUser() {
     try {
       const user = await this.authService.login(this.email, this.password);
@@ -27,10 +28,12 @@ export class Tab1Page {
         console.log('Inicio de sesión fallido');
       }
     } catch (error) {
+      // Error al iniciar sesión, mostrar error en la consola
       console.error('Error al iniciar sesión:', error);
     }
   }
 
+  // Método para presentar un cuadro de diálogo para registrar usuario
   async presentSignupAlert() {
     const alert = await this.alertController.create({
       header: 'Registro',
@@ -55,13 +58,16 @@ export class Tab1Page {
           text: 'Registrarse',
           handler: async data => {
             try {
+              // Intentar registrarse con el correo electrónico y la contraseña proporcionados
               const result = await this.authService.signup(data.email, data.password);
               if (result.success) {
+                // Si el registro es exitoso, mostrar mensaje de éxito
                 this.presentAlert('Éxito', result.message);
               } else {
+                // Si el registro falla, mostrar mensaje de error
                 this.presentAlert('Error', result.message);
               }
-            } catch (error: any) { // Especificamos el tipo de error como 'any'
+            } catch (error: any) { // Capturar errores durante el registro
               this.presentAlert('Error', 'Error al registrar: ' + error.message);
             }
           }
@@ -72,6 +78,7 @@ export class Tab1Page {
     await alert.present();
   }
 
+  // Método para presentar un cuadro de alerta
   async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({
       header,
