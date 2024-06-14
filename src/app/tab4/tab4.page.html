@@ -1,13 +1,36 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>tab4</ion-title>
+    <ion-title>
+      Alertas
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">tab4</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-card *ngIf="waterLevel >= 90">
+    <ion-card-header>
+      Alerta de Nivel de Agua Tanque 1
+    </ion-card-header>
+    <ion-card-content>
+      El nivel de agua en el tanque 1 ha alcanzado el {{waterLevel}}%. Se recomienda acudir a la planta de tratamiento de aguas pluviales.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="waterLevel2 >= 90">
+    <ion-card-header>
+      Alerta de Nivel de Agua Tanque 2
+    </ion-card-header>
+    <ion-card-content>
+      El nivel de agua en el tanque 2 ha alcanzado el {{waterLevel2}}%. Se recomienda acudir a la planta de tratamiento de aguas pluviales.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="waterLevel3 >= 90">
+    <ion-card-header>
+      Alerta de Nivel de Agua Tanque 3
+    </ion-card-header>
+    <ion-card-content>
+      El nivel de agua en el tanque 3 ha alcanzado el {{waterLevel3}}%. Se recomienda acudir a la planta de tratamiento de aguas pluviales.
+    </ion-card-content>
+  </ion-card>
 </ion-content>

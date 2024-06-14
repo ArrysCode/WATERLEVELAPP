@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service'; // Importa el servicio de autenticación
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { IonTabs } from '@ionic/angular';
-import { Usuario } from '../services/interfaces';
 import { switchMap } from 'rxjs/operators';
 @Component({
   selector: 'app-tabs',
@@ -31,13 +29,13 @@ export class TabsPage {
           } else {
             // Si el usuario no está autenticado, establecer isAdmin como false
             this.isAdmin = false;
-            console.log('¿Es administrador?', 'No');
+            
             return [];
           }
         })
       ).subscribe(roles => {
         this.isAdmin = roles.includes('admin');
-        console.log('¿Es administrador?', this.isAdmin ? 'Sí' : 'No');
+        
       });
     }
 

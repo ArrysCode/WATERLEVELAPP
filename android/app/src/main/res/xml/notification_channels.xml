@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<channels xmlns:android="http://schemas.android.com/apk/res/android">
+  <channel
+    android:id="@+id/default_channel_id"
+    android:name="Default Channel"
+    android:description="@string/channel_description"
+    android:visibility="visible"
+    />
+</channels>

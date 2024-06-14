@@ -11,19 +11,24 @@
     <ion-card-content>
       <img src="https://brandlogos.net/wp-content/uploads/2013/06/universidad-libre-vector-logo.png" alt="Logo">
       <ion-item>
-        <ion-label position="floating">Correo electrónico</ion-label>
-        <ion-input type="email" [(ngModel)]="email"></ion-input>
+        <ion-label position="floating">Correo electrónico</ion-label><br>
+        <ion-input type="email" [(ngModel)]="email">
+          <ion-icon class="form-icon" name="at-outline"></ion-icon>
+        </ion-input>
+        
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Contraseña</ion-label>
-        <ion-input type="password" [(ngModel)]="password"></ion-input>
+        <ion-label position="floating">Contraseña</ion-label><br>
+        <ion-input type="password" [(ngModel)]="password">
+          <ion-icon class="form-icon" name="lock-closed-outline"></ion-icon>
+        </ion-input>
       </ion-item>
       <ion-row>
         <ion-col>
           <ion-button expand="block" (click)="loginUser()">Iniciar sesión</ion-button>
         </ion-col>
         <ion-col>
-          <ion-button expand="block" (click)="presentSignupAlert()">Registrarse</ion-button>
+          <ion-button class="signup-bottom" expand="block" (click)="presentSignupAlert()">Registrarse</ion-button>
         </ion-col>
       </ion-row>
       

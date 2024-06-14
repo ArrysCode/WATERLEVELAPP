@@ -4,4 +4,9 @@ export interface Usuario {
     rol: string[];
     uid:string;
   }
+
+export interface Notification {
+  id:number;
+  measure:number;
+}
   
