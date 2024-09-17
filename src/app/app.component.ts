@@ -10,9 +10,7 @@ export class AppComponent {
   constructor(
     private router: Router,
     private authService: AuthService
-    ) {
-
-    }
+    ) {}
   ngOnInit() {
     // Verifica si hay un usuario autenticado al iniciar la aplicación
     this.authService.getCurrentUser().then(user => {

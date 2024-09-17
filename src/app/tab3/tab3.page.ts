@@ -1,69 +1,82 @@
 import { Component } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { LocalNotifications } from '@capacitor/local-notifications';
-
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
-  waterLevel1: number = 0; // Nivel de agua del tanque 1
-  waterLevel2: number = 0; // Nivel de agua del tanque 2
-  waterLevel3: number = 0; // Nivel de agua del tanque 3
+  waterLevel1: number = 0;
+  waterLevel2: number = 0;
+  waterLevel3: number = 0;
 
+  
   constructor(private db: AngularFireDatabase) {
-    // Obtener las medidas de los tres tanques al inicializar la página
     this.getMeasures1();
     this.getMeasures2();
     this.getMeasures3();
   }
 
-  // Método para obtener las medidas del primer tanque
+  ngOnInit() {
+    console.log('Tab3Page initialized');
+  }
+
   getMeasures1() {
+    
     const path = "test1/float";
     this.db.object<number | null>(path).valueChanges().subscribe((res: number | null) => {
       if (res !== null) {
-        // Calcular y actualizar el nivel de agua del tanque 1
+        console.log("Medición: ", res);
         this.waterLevel1 = Math.floor(this.calculateWaterLevel(res));
-        // Verificar y enviar notificación si es necesario
+        console.log("Nivel de agua actualizado:", this.waterLevel1);
+        
         this.checkAndSendNotification(this.waterLevel1, 1);
+      } else {
+        console.log("El valor es nulo.");
       }
     });
   }
 
-  // Método para obtener las medidas del segundo tanque (similar a getMeasures1)
   getMeasures2() {
     const path = "test2/float";
     this.db.object<number | null>(path).valueChanges().subscribe((res: number | null) => {
       if (res !== null) {
+        console.log("Medición: ", res);
         this.waterLevel2 = Math.floor(this.calculateWaterLevel(res));
+        console.log("Nivel de agua actualizado:", this.waterLevel2);
+        
         this.checkAndSendNotification(this.waterLevel2, 2);
+      } else {
+        console.log("El valor es nulo.");
       }
     });
   }
 
-  // Método para obtener las medidas del tercer tanque (similar a getMeasures1)
   getMeasures3() {
     const path = "test3/float";
     this.db.object<number | null>(path).valueChanges().subscribe((res: number | null) => {
       if (res !== null) {
+        console.log("Medición: ", res);
         this.waterLevel3 = Math.floor(this.calculateWaterLevel(res));
+        console.log("Nivel de agua actualizado:", this.waterLevel3);
+        
         this.checkAndSendNotification(this.waterLevel3, 3);
+      } else {
+        console.log("El valor es nulo.");
       }
     });
   }
 
-  // Método para calcular el nivel de agua basado en la distancia
   calculateWaterLevel(distance: number): number {
-    const tankHeight = 150; // Altura del tanque en cm (suponiendo 1.5m)
+    // Suponiendo que 1.5m representa el tanque lleno
+    const tankHeight = 150; // 1.5m en cm
     let percentage = ((tankHeight - distance) / tankHeight) * 100;
     if (percentage < 0) percentage = 0;
     if (percentage > 100) percentage = 100;
     return percentage;
   }
 
-  // Método privado para verificar el nivel de agua y enviar notificaciones si es necesario
   private async checkAndSendNotification(waterLevel: number, TankId: number) {
     if (waterLevel >= 80 && waterLevel < 90) {
       await this.sendNotification(TankId, 'Nivel de agua alto en el tanque '+ TankId, 'El nivel de agua está por encima del 80%.');
@@ -72,7 +85,6 @@ export class Tab3Page {
     }
   }
 
-  // Método para enviar notificaciones locales
   sendNotification(id: number, title: string, body: string) {
     const options = {
       notifications: [{
@@ -83,11 +95,15 @@ export class Tab3Page {
       }]
     };
   
-    // Utilización de Capacitor para programar la notificación local
     LocalNotifications.schedule(options).then(() => {
-      // Notificación enviada con éxito
+      console.log('Notificación enviada con éxito.');
     }).catch((error) => {
-      // Error al enviar la notificación
+      console.error('Error al enviar la notificación:', error);
     });
   }
+
+  
+
+
+  
 }

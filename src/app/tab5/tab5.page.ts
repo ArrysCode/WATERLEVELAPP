@@ -9,43 +9,52 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   styleUrls: ['./tab5.page.scss'],
 })
 export class Tab5Page implements OnInit {
-  usuarios: any[] = []; // Lista de usuarios obtenidos
-  cardSeleccionada!: number; // Índice de la card seleccionada
+  usuarios: any[] = [];
+  cardSeleccionada!: number;
   usuariosFiltrados: any[] = []; // Arreglo de usuarios filtrados
 
-  constructor(private authService: AuthService, private alertController: AlertController, private firestore: AngularFirestore) { }
+  constructor(private authService: AuthService, private alertController: AlertController,private firestore: AngularFirestore) { }
 
   ngOnInit() {
-    // Obtener la lista de usuarios excluyendo el usuario actual
     this.authService.getUsuariosExceptoActual().subscribe((usuarios: any[]) => {
       this.usuarios = usuarios;
+      console.log('Usuarios obtenidos:', this.usuarios); // Agregamos un log para verificar los usuarios recibidos
     });
 
-    // Inicializar la card seleccionada
     this.cardSeleccionada = -1;
   }
 
-  // Método para filtrar usuarios
   filtrarUsuarios(event: any) {
     const textoBusqueda = event.target.value.toLowerCase(); // Obtener texto de búsqueda en minúsculas
+    console.log('Texto de búsqueda:', textoBusqueda); // Imprimir el texto de búsqueda
   
     // Filtrar usuarios basados en el texto de búsqueda
     this.usuariosFiltrados = this.usuarios.filter(usuario => {
       const coincideCorreo = usuario.correo.toLowerCase().includes(textoBusqueda);
       const coincideRol = usuario.rol.toString().toLowerCase().includes(textoBusqueda); // Convertir a cadena y luego buscar coincidencias
       const coincide = coincideCorreo || coincideRol; // Considerar que el usuario coincide si su correo o su rol coincide con el texto de búsqueda
+      if (coincide) {
+        console.log('Usuario coincidente:', usuario); // Imprimir usuarios coincidentes
+      }
       return coincide;
     });
   }
+  
 
-  // Método para seleccionar una card
   seleccionarCard(index: number) {
-    // Asignar el índice de la card seleccionada
+    // Función para manejar la selección de la card
     this.cardSeleccionada = index;
+
+    // Imprimir los datos del usuario seleccionado por consola
+    console.log('Datos del usuario seleccionado:', this.usuarios[index]);
   }
 
-  // Método para editar un usuario
+
+
+
   async editarUsuario(usuario: any) {
+    console.log('Usuario a editar:', usuario);
+  
     const alert = await this.alertController.create({
       header: 'Editar Usuario',
       subHeader: usuario.correo,
@@ -57,6 +66,9 @@ export class Tab5Page implements OnInit {
           label: 'Admin',
           value: 'admin',
           checked: usuario.rol === 'admin', // Marcar como seleccionado si el rol actual es 'admin'
+          handler: () => {
+            console.log('Opción seleccionada: Admin');
+          }
         },
         {
           name: 'nuevoRol',
@@ -64,6 +76,9 @@ export class Tab5Page implements OnInit {
           label: 'Usuario',
           value: 'user',
           checked: usuario.rol === 'user', // Marcar como seleccionado si el rol actual es 'user'
+          handler: () => {
+            console.log('Opción seleccionada: Usuario');
+          }
         }
       ],
       buttons: [
@@ -75,10 +90,12 @@ export class Tab5Page implements OnInit {
           text: 'Guardar',
           handler: async (data) => {
             try {
-              const nuevoRol = data.nuevoRol; // Obtener el nuevo rol seleccionado
+              console.log('Data:', data); // Imprimir el objeto data completo
+  
+              const nuevoRol = data; // Obtener directamente el valor del nuevo rol seleccionado
   
               // Actualizar la información del usuario en Firestore
-              await this.actualizarUsuario(usuario.uid, nuevoRol);
+              await this.actualizarUsuario(usuario.uid, nuevoRol); // Pasar el nuevo rol como una cadena
   
               // Mostrar una alerta de éxito cuando se actualiza el usuario
               const alert = await this.alertController.create({
@@ -98,7 +115,10 @@ export class Tab5Page implements OnInit {
     await alert.present();
   }
   
-  // Método para actualizar el rol de un usuario en Firestore
+  
+  
+  
+  
   async actualizarUsuario(uid: string, nuevoRol: string) {
     try {
       if (nuevoRol !== undefined) { // Verificar si nuevoRol tiene un valor definido
@@ -114,4 +134,14 @@ export class Tab5Page implements OnInit {
       throw error; // Propagar el error para manejarlo en la función llamadora si es necesario
     }
   }
+  
+  
+  
+  
+
+
+
+
+
+
 }
